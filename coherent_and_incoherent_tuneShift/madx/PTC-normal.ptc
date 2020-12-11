@@ -1,0 +1,20 @@
+@ NAME             %14s "NORMAL_RESULTS"
+@ TYPE             %10s "NORMAL_RES"
+@ TITLE            %08s "no-title"
+@ ORIGIN           %16s "5.06.01 Linux 64"
+@ DATE             %08s "10/12/20"
+@ TIME             %08s "12.12.53"
+* NAME                   ORDER1     ORDER2     ORDER3     ORDER4              VALUE 
+$ %s                         %d         %d         %d         %d                %le 
+ "Q1"                         0          0          0          0               0.13
+ "Q2"                         0          0          0          0               0.18
+ "DQ1"                        1          0          0          0                0.5
+ "DQ2"                        1          0          0          0                0.5
+ "DQ1"                        2          0          0          0        147.8070258
+ "DQ2"                        2          0          0          0        54.64508584
+ "DQ1"                        3          0          0          0        366980.1347
+ "DQ2"                        3          0          0          0       -24342.88221
+ "ANHX"                       1          0          0          0        153.8183853
+ "ANHY"                       1          0          0          0       -416.0175086
+ "ANHX"                       0          1          0          0       -416.0175086
+ "ANHY"                       0          1          0          0       -50.03699877
