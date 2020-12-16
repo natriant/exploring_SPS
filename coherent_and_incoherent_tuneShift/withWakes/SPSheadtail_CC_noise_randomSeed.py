@@ -83,9 +83,9 @@ Q_x, Q_y = 26.13, 26.18
 Qp_x, Qp_y = 0.5, 0.5 #10
 
 # detuning coefficients in (1/m)
-app_x = 0.0 #153.8183853 #15 #4e-11
-app_xy = 0.0 #-416.0175086  #-0*2.25e-11
-app_y = 0.0 #-50.03699877 #15000  #-7.31-14 #0*3e-11
+app_x = 153.8183853 #15 #4e-11
+app_xy = -416.0175086  #-0*2.25e-11
+app_y = -50.03699877 #15000  #-7.31-14 #0*3e-11
 
 
 # PARAMETERS FOR LONGITUDINAL MAP
@@ -104,7 +104,7 @@ damper = TransverseDamper(dampingrate_x, dampingrate_y)
 
 # CREATE BEAM
 # ===========
-macroparticlenumber = int(700**2) # 100000
+macroparticlenumber = int(5e5)
 
 charge = e
 mass = m_p
@@ -125,6 +125,19 @@ sigma_yp = sigma_y/beta_y[0]
 sigma_dp = sigma_z/beta_z
 epsn_z = 4*np.pi * p0/e * sigma_z*sigma_dp
 
+bunch = generate_Gaussian6DTwiss(
+    macroparticlenumber, intensity, charge, mass, circumference, gamma,
+    alpha_x[0], alpha_y[0], beta_x[0], beta_y[0], beta_z, epsn_x, epsn_y, epsn_z)
+xoffset = 1e-4
+yoffset = 1e-4
+bunch.x += xoffset
+bunch.y += yoffset
+
+
+afile = open('bunch', 'wb')
+pickle.dump(bunch, afile)
+afile.close()
+
 
 # SLICER FOR WAKEFIELDS
 # =====================
@@ -137,22 +150,9 @@ n_turns_wake = 1 # for the moment we consider that the wakefield decays after 1 
 #wakefile1 = ('/afs/cern.ch/work/n/natriant/private/pyheadtail_example_crabcavity/wakefields/newkickers_Q26_2018_modified.txt')
 wakefile1 = ('/afs/cern.ch/work/n/natriant/private/pyheadtail_example_crabcavity/wakefields/SPS_complete_wake_model_2018_Q26.txt')
 ww1 = WakeTable(wakefile1, ['time', 'dipole_x', 'dipole_y', 'quadrupole_x', 'quadrupole_y'], n_turns_wake=n_turns_wake)
-# only dipolar kick
-#my_length = len(ww1.wake_table['quadrupole_x'])
-#ww1.wake_table['quadrupole_x'] = np.zeros(my_length)
-#ww1.wake_table['quadrupole_y'] = np.zeros(my_length)
 
-# only quadrupolar kick
-#my_length = len(ww1.wake_table['dipole_x'])
-#ww1.wake_table['dipole_x'] = np.zeros(my_length)
-#ww1.wake_table['dipole_y'] = np.zeros(my_length)
 
 wake_field_kicker = WakeField(slicer_for_wakefields, ww1)#, beta_x=beta_x, beta_y=beta_y)
-
-#reload object from file
-file2 = open('/afs/cern.ch/work/n/natriant/private/pyheadtail_example_crabcavity/incoherent_tune_shift/bunch', 'rb')
-bunch = pickle.load(file2)
-file2.close()
 
 
 # CREATE TRANSVERSE AND LONGITUDINAL MAPS
@@ -206,11 +206,6 @@ one_turn_map.append(longitudinal_map)
 n_damped_turns = int(n_turns/decTurns) # The total number of turns at which the data are damped.
                        # We want this number as an integer, so it can be used in the next functions. 
 
-#dataExport = {}
-#dataExport['X'] ={}
-#dataExport['Y'] ={}
-#dataExport['meanX']={}
-#dataExport['meanY']={}
  
 X = {}
 Y = {}
@@ -258,7 +253,7 @@ for i in range(n_turns):
     #bunch.xp += delayPhase[0]*np.cos(2*np.pi*400e6/(bunch.beta*c)*bunch.z)
     '''
 
-    if i%decTurns is  0:
+    if i%decTurns is 0:
         j = int(i/decTurns)
         X[f'turn {j}'] = bunch.x
         Y[f'turn {j}'] = bunch.y
@@ -269,6 +264,8 @@ for i in range(n_turns):
 # Compute coherent tune
 Qx_coherent = pnf.get_tune(meanX)
 Qy_coherent = pnf.get_tune(meanY)
+
+print(f'Qx coherent {Qx_coherent}, Qy coherent {Qy_coherent}')
 
 # Compute incoherent tune from tracking
 Qx_incoherent_tracking = []
@@ -285,26 +282,15 @@ for particle in range(macroparticlenumber):
     Qx_incoherent_tracking.append(pnf.get_tune(np.array(x_signal)))
     Qy_incoherent_tracking.append(pnf.get_tune(np.array(y_signal)))
 
-print(Qx_coherent, Qy_coherent)
+
 with open('Qx_file.pkl', 'wb') as ff:
         pickle.dump(Qx_incoherent_tracking, ff, pickle.HIGHEST_PROTOCOL)
 ff.close()
 
-with open( 'Qy_file.pkl', 'wb') as ff:
+with open('Qy_file.pkl', 'wb') as ff:
         pickle.dump(Qy_incoherent_tracking, ff, pickle.HIGHEST_PROTOCOL)
 ff.close()
 
-#file_to_write = open("file.pkl", "wb")
-#pickle.dump(dataExport, file_to_write)
-
-
-#with open('file.pkl', 'wb') as f:
-#	pickle.dump(dataExport, f)
-#f.close()
-#f = open(filename, 'w')
-#with f:
-#    out = csv.writer(f, delimiter=',')
-#    out.writerows(zip(*dataExport))
 
 print('--> Done.')
 
