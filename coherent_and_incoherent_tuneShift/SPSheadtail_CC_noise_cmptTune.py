@@ -20,6 +20,7 @@ from PyHEADTAIL.monitors.monitors import BunchMonitor, SliceMonitor, ParticleMon
 from PyHEADTAIL.feedback.transverse_damper import TransverseDamper
 from PyHEADTAIL.impedances.wakes import CircularResonator, WakeTable, WakeField
 
+print('Start script')
 #==========================================================
 #               Variables We Change
 #==========================================================
@@ -43,7 +44,7 @@ damperOn = 0  # Turns on the damper - 0 is off, 1 is on
 dampingrate_x = 50  # Strength of the damper (note it must be turned on further down in the code)
                             #(40 is the "standard" value)
 
-wakefieldOn = 1          # Turns on the wakefields
+wakefieldOn = 0          # Turns on the wakefields
 
 measNoiseOn = 0             # Turns on the measurement noise - 0 is off, 1 is on
 stdMeasNoise = 1000e-9       # standard deviation of measurement noise
@@ -134,7 +135,7 @@ bunch.x += xoffset
 bunch.y += yoffset
 
 
-afile = open('bunch', 'wb')
+afile = open('bunch2', 'wb')
 pickle.dump(bunch, afile)
 afile.close()
 
@@ -162,7 +163,7 @@ transverse_map = TransverseMap(s, alpha_x, beta_x, D_x, alpha_y, beta_y, D_y, Q_
     [Chromaticity(Qp_x, Qp_y),
     AmplitudeDetuning(app_x*scale_factor, app_y*scale_factor, app_xy*scale_factor)])
 
-longitudinal_map = LinearMap([alpha], circumference, Q_s)
+#longitudinal_map = LinearMap([alpha], circumference, Q_s)
 
 
 
@@ -201,7 +202,7 @@ for i, segment in enumerate(transverse_map):
     if wakefieldOn:
         if i+1 == i_wake:
             one_turn_map.append(wake_field_kicker)
-one_turn_map.append(longitudinal_map)
+#one_turn_map.append(longitudinal_map)
 
 n_damped_turns = int(n_turns/decTurns) # The total number of turns at which the data are damped.
                        # We want this number as an integer, so it can be used in the next functions. 
