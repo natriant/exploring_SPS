@@ -38,7 +38,7 @@ if __name__ == '__main__':
     omegaZ = 2*np.pi*freqZ
 
     ReZ = np.real(impedanceData[:, 2])  # dipolar kick in y-plane
-    ImZ = np.real(impedanceData[:, 2])
+    ImZ = np.imag(impedanceData[:, 2])
     #### Sacherer formula (e.g. 8 and 9 in Sec 2.5.7 in Handbook of Accelerator physics and engineering from A. Chao and M. Tigner) ################
     modeNumber = 0
     #nSideband = int(np.floor((1E10/frev)))
