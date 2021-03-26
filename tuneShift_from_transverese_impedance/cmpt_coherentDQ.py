@@ -163,6 +163,7 @@ if __name__ == '__main__':
     I_0 = Nb*e*omega_0/(2*np.pi)  # bunch current
     beta = np.sqrt(1-(1/(gamma**2)))
 
+    ### Eq.18 in https://cds.cern.ch/record/322645/files/HEACC74_368-372.pdf ###########
     Domega= -(e*beta*I_0*Zeff)/((1+l)*(2*26.18*gamma*m_p*4*sigma_z*omega_0))
 
     DQ_coh = Domega/omega_0

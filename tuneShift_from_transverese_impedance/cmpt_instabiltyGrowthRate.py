@@ -163,6 +163,7 @@ if __name__ == '__main__':
     I_0 = Nb*e*omega_0/(2*np.pi)  # bunch current
     beta = np.sqrt(1-(1/(gamma**2)))
 
+    ### Eq.18 in https://cds.cern.ch/record/322645/files/HEACC74_368-372.pdf ###########
     Domega= (e*beta*I_0*Zeff)/((1+l)*(2*26.18*gamma*m_p*4*sigma_z*omega_0))
 
     growth = -Domega/omega_0
@@ -173,7 +174,7 @@ if __name__ == '__main__':
     dmu = np.arange(1E-6, 3E-4, 1E-6)  # tune spread (striclty from amplitude detuning)
     supps = np.zeros_like(dmu)
 
-    #### Eq. 26 in https://aip.scitation.org/doi/abs/10.1063/1.47298 #################################################################################
+    #### Eq. 26 in https://aip.scitation.org/doi/abs/10.1063/1.47298 ####################################
 
     #for i in range(len(dmu)):
     #    f = lambda x: (4 * np.pi ** 2 * (1 - dGain / 2) ** 2 * x ** 2) * np.exp(-x ** 2 / (2.0 * dmu[i] ** 2)) / (
