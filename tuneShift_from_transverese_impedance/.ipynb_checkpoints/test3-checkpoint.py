@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 from scipy.integrate import quad
 
 
-def hmm_gaus(omega, sigma_z, l=0):
-    return (omega*sigma_z/c)**(2*l)*np.exp(-(omega*sigma_z/c)**2)
+def hmm_gaus(omega, sigma_z, clight, l=0):
+    return (omega*sigma_z/clight)**(2*l)*np.exp(-(omega*sigma_z/clight)**2)
 
 
 #def hmm_gaus_tau(omega, tau):
@@ -15,10 +15,15 @@ def hmm_gaus(omega, sigma_z, l=0):
 
 
 if __name__ == '__main__':
+    r_0 = 1.535 * 10 ** (-16)
+    clight = 2.99 * 10 ** (10)  # [cm]/[s]
     l = 0 # azimuthial mode (headtail mode)
-    circum = 2 * np.pi * 1.1E3  # [m[
-    f_0 = c / circum  # revolution frequency in Hz
+    circum = 2 * np.pi * 1.1E3*1e2  # [cm]
+    f_0 = clight / circum  # revolution frequency in Hz
+    print(1/f_0)
     omega_0 = 2 * np.pi * f_0  # angular revolution frequency
+    nu_b = 26.18
+    sigma_z = 15.5 # cm
 
 
     # Load the impedance model
@@ -60,15 +65,16 @@ if __name__ == '__main__':
 
     # compute effective impedance
     #q_y = 0.18  # fractional part of the tune
-    Q_y = 26.18  # betatron tune
+    #Q_y = 26.18  # betatron tune
 
     # bunch length
     #tau = 1.85E-9 # 4 sigma_t
-    sigma_z = 0.155  # rms bunch length in [m] tau * c / 4
-    tau = 4*sigma_z/c
+    #sigma_z = 0.155  # rms bunch length in [m] tau * c / 4
+    #tau = 4*sigma_z/c
 
 
-    omegas = omega_0*(sidebands_p+Q_y) # the middle is not zero due to the shift of q_y
+    omegas = omega_0*(sidebands_p+nu_b) # the middle is not zero due to the shift of q_y
+    print('here')
     #Qs =  0.0051
     #omegas = omega_0 * (sidebands_p + Q_y-l*Qs)
 
@@ -89,7 +95,7 @@ if __name__ == '__main__':
     omega_xi = Qp_y * omega_0 / eta
 
 
-    hs = hmm_gaus(omegas-omega_xi, sigma_z)
+    hs = hmm_gaus(omegas-omega_xi, sigma_z, clight)
     #hs = hmm_gaus_tau(omegas-omega_xi, tau)
 
 
@@ -154,7 +160,7 @@ if __name__ == '__main__':
     Zeff_denominator = np.sum(hs)
     Zeff = Zeff_nominator/Zeff_denominator
 
-    print(Zeff)
+    print(f'Zeff = {Zeff} [Ohm/m]')
 
 
     # Compute DQ
@@ -164,7 +170,11 @@ if __name__ == '__main__':
     beta = np.sqrt(1-(1/(gamma**2)))
 
     ### Eq.18 in https://cds.cern.ch/record/322645/files/HEACC74_368-372.pdf ###########
-    Domega= -(e*beta*I_0*Zeff)/((1+l)*(2*26.18*gamma*m_p*4*sigma_z*omega_0))
+    #Domega= -(e*beta*I_0*Zeff)/((1+l)*(2*26.18*gamma*m_p*4*sigma_z*omega_0))
+
+    iZeff = (1/9)*Zeff*1e-13
+
+    Domega = -(Nb * r_0 * clight ** 2 * iZeff) / (8 * np.pi ** (3 / 2) * gamma * nu_b * sigma_z)
 
     DQ_coh = Domega/omega_0
     print(f'DQ_coh = {DQ_coh} ')

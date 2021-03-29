@@ -1,3 +1,8 @@
+''''
+Compute damping/growth time from impedance using Eq.6.207  https://www.slac.stanford.edu/~achao/WileyBook/WileyChapter6.pdf of Chao book.
+CGS units are used.
+'''
+
 import os
 import pandas as pd
 import numpy as np
