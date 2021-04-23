@@ -15,7 +15,9 @@
  !call, file = 'sps/aperture/aperturedb_2.dbx';
  call, file = 'sps/sequence/sps.seq';
  !call, file = 'sps/aperture/aperturedb_3.dbx';
- call, file = 'sps/strength/SPS_Q20.str';
+ !call, file = 'sps/strength/SPS_Q20.str';
+ call, file = 'sps/strength/SPS_q26.str';
+ !call, file = 'sps/strength/lch_q26.str';
  call, file = 'sps/strength/elements.str';
  option, echo;
 
