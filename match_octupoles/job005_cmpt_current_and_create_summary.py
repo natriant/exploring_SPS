@@ -52,13 +52,13 @@ I_lof = list(cmpt_current_klof(O3_lof))
 I_lod = list(cmpt_current_klod(O3_lod))
 
 
-test_list = [[ayy_list], [axy_list], [klof_list], [klod_list], [O3_lof], [O3_lod], [I_lof], [I_lod]]
+test_list = [[ayy_list][0], [axy_list][0], [klof_list][0], [klod_list][0], [O3_lof][0], [O3_lod][0], [I_lof][0], [I_lod][0]]
 index_list = ['ayy [1/m]', 'axy [1/m]', 'klof [1/m^4]', 'klod [1/m^4]', 'O3_lof [T/m^3]', 'O3_lod [T/m^3]', 'I_lof [A]', 'I_lod [A]']
 
 df1 = pd.DataFrame(test_list, index=index_list).T
 
 # save data frame to pickle
-save2pickle=False
+save2pickle=True
 if save2pickle:
 	df1.to_pickle("summary_QpxQpy1_b3b5b7_270GeV_ayyScan_axyNoConstraint_LOD.pkl")
 # test prin
