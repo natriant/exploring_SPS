@@ -204,7 +204,7 @@ match_octupoles(ayy_val, axy_val) : macro = {
 	!vary, name=KLOF, STEP=1.E-8;
 	use_macro, name=PTCchroma;
 	!constraint, expr=axx=axx_val;
- 	constraint, expr=ayy=-ayy_val;
+ 	constraint, expr=ayy=ayy_val;
  	!constraint, expr=axy=axy_val;
 	jacobian, calls=1000, tolerance=1e-18;
 	create, table=matching_results, column=klod, klof, axx, ayy, axy;
