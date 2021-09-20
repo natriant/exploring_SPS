@@ -46,10 +46,10 @@ for my_ayy in ayy_list:
 
     
     # Include b3b5b7 in MBA and MBB
-    mad.call('./sps/cmd/sps_setMultipoles_upto7.cmd')
-    mad.input('exec, set_Multipoles_270GeV;')
-    mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
-    mad.input('exec, AssignMultipoles;')
+    #mad.call('./sps/cmd/sps_setMultipoles_upto7.cmd')
+    #mad.input('exec, set_Multipoles_270GeV;')
+    #mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
+    #mad.input('exec, AssignMultipoles;')
 
 
     # Tune and Chromaticity matching
@@ -82,6 +82,6 @@ for my_ayy in ayy_list:
     else:
         df = df.append(my_dict, ignore_index=True)
 print(df)
-df.to_pickle('matching_results_QpxQpy1_b3b5b7_270GeV_nositive_ayy_lod.pkl')
+df.to_pickle('matching_results_QpxQpy1_b3b5b7_270GeV_positive_ayy_lod.pkl')
 
 

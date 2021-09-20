@@ -35,15 +35,22 @@ for study in study_list:
     df = pd.read_pickle(path2octupoles_matching_data+study)
     for i in range(len(df.axy)):
         if i == 0:
-            axy_list.append(df.axy[i])
-            ayy_list.append(df.ayy[i])
-            klof_list.append(df.klof[i])
-            klod_list.append(df.klod[i])
+            if study == study_list[0]: # for the case of negative ayy remove the first (ayy=0) entry in order not to be duplicated
+                continue
+            else:
+                axy_list.append(df.axy[i])
+                ayy_list.append(df.ayy[i])
+                klof_list.append(df.klof[i])
+                klod_list.append(df.klod[i])
         else:
+            #if study == study_list[0]:
+            #    df.axy, df.ayy, df.klof, df.klod = df.axy[::-1], df.ayy[::-1], df.klof[::-1], df.klod[::-1]
             axy_list.append(df.axy[i][0])
             ayy_list.append(df.ayy[i][0])
             klof_list.append(df.klof[i][0])
             klod_list.append(df.klod[i][0])
+            if study == study_list[0]:
+                axy_list, ayy_list, klof_list, klod_list = axy_list[::-1], ayy_list[::-1], klof_list[::-1], klod_list[::-1]
 
 O3_lof = cmpt_octupole_coefficient(np.array(klof_list), Brho)
 O3_lod = cmpt_octupole_coefficient(np.array(klod_list), Brho)
