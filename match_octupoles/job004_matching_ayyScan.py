@@ -1,15 +1,31 @@
+'''
+To select differnt options for the matching modify the following files accoridng to the point below: /madx/sps/cmd/sps_matching.cmd
+
+1. axy constraint --> constraint, expr=axy=axy_val; (no comment out)
+2. axy no contraint --> !constraint, expr=axy=axy_val; (comment out)
+3. match for ayy > 0.0 --> constraint, expr=ayy=ayy_val;
+4. match for ayy < 0.0 --> constraint, expr=ayy=-ayy_val;
+5. match using both LOD and LOF --> 
+	vary, name=KLOD, STEP=1.E-8;
+	vary, name=KLOF, STEP=1.E-8;
+
+6. match using only LOD -->
+	vary, name=KLOD, STEP=1.E-8;
+	!vary, name=KLOF, STEP=1.E-8;
+'''
+
 from cpymad.madx import Madx
 import pandas as pd
 import numpy as np
 
 
 # MAD-X parameters dictionary
-madx_settings = {'QH':26.13, 'QV':26.18, 'QPH':0.0, 'QPV':0.0}
+madx_settings = {'QH':26.13, 'QV':26.18, 'QPH':1.0, 'QPV':1.0}
 seq_name = 'sps'
 harmonic_number = 4620
 
 
-ayy_list = np.arange(0, 21000.0, 1000)
+ayy_list = np.arange(0, 22000.0, 2000)
 print(ayy_list)
 
 #ayy_list = [10000.0, 12000.0]
@@ -29,18 +45,19 @@ for my_ayy in ayy_list:
     mad.use(seq_name)
 
     
+    # Include b3b5b7 in MBA and MBB
+    mad.call('./sps/cmd/sps_setMultipoles_upto7.cmd')
+    mad.input('exec, set_Multipoles_270GeV;')
+    mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
+    mad.input('exec, AssignMultipoles;')
+
+
     # Tune and Chromaticity matching
     mad.call('./sps/cmd/sps_matching.cmd')
     mad.input('exec, SPS_matchtunes(QH, QV);')
     mad.input('exec, SPS_setchroma_Q26(QPH, QPV);')
     mad.input('acta.31637, harmon=%d;'%harmonic_number)
     mad.input('exec, match_chroma(QPH ,QPV);')
-
-    # Include b3b5b7 in MBA and MBB
-    #mad.call('./sps/cmd/sps_setMultipoles_upto7.cmd')
-    #mad.input('exec, set_Multipoles_270GeV;')
-    #mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
-    #mad.input('exec, AssignMultipoles;')
 
     # Match the octupoles
     print('Start octupoles matching')
@@ -65,6 +82,6 @@ for my_ayy in ayy_list:
     else:
         df = df.append(my_dict, ignore_index=True)
 print(df)
-df.to_pickle('matching_results.pkl')
+df.to_pickle('matching_results_QpxQpy1_b3b5b7_270GeV_nositive_ayy_lod.pkl')
 
 

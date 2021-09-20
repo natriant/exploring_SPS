@@ -79,6 +79,8 @@
  !use, sequence=SPS;
  twiss;
 
+ value, brho;
+ value, h;
 
  !twiss; as the chroma matching is not done here, the k2l is incorrect
  !use, sequence=SPS;
