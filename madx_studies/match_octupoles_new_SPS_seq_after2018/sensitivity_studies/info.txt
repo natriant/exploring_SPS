@@ -1,5 +1,5 @@
 1) Sensitvity of the octupole matching to different energies
-No sensitivity to the beam energy. Same results for 200 and 270 GeV.
+No sensitivity to the beam energy. Same results for 26GeV, 200 GeV and 270 GeV.
 
 2) Sensitivity of the octupole matching to the bunch length
 No sensitivity to the bunch length

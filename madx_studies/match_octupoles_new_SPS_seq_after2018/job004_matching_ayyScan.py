@@ -51,13 +51,19 @@ for my_ayy in ayy_list:
     #mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
     #mad.input('exec, AssignMultipoles;')
 
+    # Tune matching. After the latest update the names of the quadrupoles changed. Therfore, to performe the tune matching correctly the following macro from the toolkit repository is needed.
+    # https://gitlab.cern.ch/acc-models/acc-models-sps/-/tree/2021/
+    mad.call('./sps/toolkit/macro.madx')
+    mad.input('exec, sps_match_tunes(QH,QV);')
+    #mad.call('./sps/cmd/sps_matching.cmd')
+    #mad.input('exec, SPS_matchtunes(QH, QV);')
 
-    # Tune and Chromaticity matching
+    # Chromaticity matching
     mad.call('./sps/cmd/sps_matching.cmd')
-    mad.input('exec, SPS_matchtunes(QH, QV);')
     mad.input('exec, SPS_setchroma_Q26(QPH, QPV);')
     mad.input('acta.31637, harmon=%d;'%harmonic_number)
     mad.input('exec, match_chroma(QPH ,QPV);')
+    print('here')
 
     # Match the octupoles
     print('Start octupoles matching')

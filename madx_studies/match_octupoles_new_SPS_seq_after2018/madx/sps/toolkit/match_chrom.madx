@@ -1,0 +1,72 @@
+qph_setvalue=temp_qph_setvalue;
+qpv_setvalue=temp_qph_setvalue;
+
+
+exec,sps_define_sext_knobs;
+qx1=0; qy1=0; qx2=0; qy2=0;
+
+qph_setvalue=0;
+qpv_setvalue=0;
+
+klsda0=0;klsdb0=0;klsfa0=0;klsfb0=0;
+
+match, use_macro;
+use_macro,name=twiss_qpp;
+vary, name=klsda0,  step=1.e-8;
+vary, name=klsdb0,  step=1.e-8;
+vary, name=klsfa0,  step=1.e-8;
+vary, name=klsfb0,  step=1.e-8;
+klsfc0:=klsfa0;
+!vary, name=klsfc0,  step=1.e-8;
+constraint,expr=t_qx1=qx1;
+constraint,expr=t_qy1=qy1;
+jacobian,calls=10,tolerance=1e-10;
+constraint,expr=t_qx2=qx2;
+constraint,expr=t_qy2=qy2;
+jacobian,calls=10,tolerance=1e-10;
+endmatch;
+value,klsda0,klsdb0,klsfa0,klsfb0,klsfc0;
+value,t_qx1,t_qy1,t_qx2,t_qy2;
+
+qx2=t_qx2;
+qy2=t_qy2;
+
+qph_setvalue=0.1;
+qpv_setvalue=0;
+
+match, use_macro;
+use_macro,name=twiss_qpp;
+vary, name=logical.lsdaqph,  step=1.e-8;
+vary, name=logical.lsdbqph,  step=1.e-8;
+vary, name=logical.lsfaqph,  step=1.e-8;
+vary, name=logical.lsfbqph,  step=1.e-8;
+logical.lsfcqph:=logical.lsfaqph;
+constraint,expr=t_qx1=qx1+qph_setvalue*qx0;
+constraint,expr=t_qy1=qy1;
+jacobian,calls=15,tolerance=1e-10;
+constraint,expr=t_qx2=qx2;
+constraint,expr=t_qy2=qy2;
+jacobian,calls=15,tolerance=1e-10;
+endmatch;
+
+
+qph_setvalue=0;
+qpv_setvalue=0.1;
+
+match, use_macro;
+use_macro,name=twiss_qpp;
+vary, name=logical.lsdaqpv,  step=1.e-8;
+vary, name=logical.lsdbqpv,  step=1.e-8;
+vary, name=logical.lsfaqpv,  step=1.e-8;
+vary, name=logical.lsfbqpv,  step=1.e-8;
+logical.lsfcqph:=logical.lsfaqph;
+constraint,expr=t_qx1=qx1;
+constraint,expr=t_qy1=qy1+qpv_setvalue*qy0;
+jacobian,calls=15,tolerance=1e-10;
+constraint,expr=t_qx2=qx2;
+constraint,expr=t_qy2=qy2;
+jacobian,calls=15,tolerance=1e-10;
+endmatch;
+
+temp_qph_setvalue=qph_setvalue;
+temp_qpv_setvalue=qph_setvalue;

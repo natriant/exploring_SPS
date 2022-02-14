@@ -4,17 +4,13 @@
  * SPECIFY THE SPS BEAM CONFIGURATION, ENERGY and EMITTANCES
  ***************************************************/
 
- call, file = 'sps/beams/lhc_beam.beamx';
+ call, file = 'sps/beams/beam_lhc_injection.madx';
 
 /***************************************************
  * files for SPS
  ***************************************************/
 
- !call, file = 'sps/aperture/aperturedb_1.dbx';
- !call, file = 'sps/aperture/aperturedb_2.dbx';
- !call, file = 'sps/sequence/sps.seq';
  call, file = 'sps/sequence/SPS_LS2_2020-05-26.seq';
- !call, file = 'sps/aperture/aperturedb_3.dbx';
  call, file = 'sps/strength/lhc_q26.str';
  option, echo;
 
