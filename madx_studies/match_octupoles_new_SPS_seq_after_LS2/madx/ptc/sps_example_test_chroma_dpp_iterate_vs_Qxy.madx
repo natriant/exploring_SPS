@@ -10,22 +10,17 @@
  ***************************************************/
  
  call, file = 'sps/beams/lhc_beam_injection.beamx';
- !Beam, particle = proton, energy = 270.0, NPART=1.3E11, BUNCHED;
 /***************************************************
  * files for SPS
  ***************************************************/
 
- call, file = '../sps/elements/sps.ele';
- !call, file = '../sps/aperture/aperturedb_1.dbx';
- !call, file = '../sps/aperture/aperturedb_2.dbx';
- call, file = '../sps/sequence/sps.seq';
- !call, file = '../sps/aperture/aperturedb_3.dbx';
- call, file = '../sps/strength/SPS_Q20.str';
- call, file = '../sps/strength/elements.str';
+ call, file = 'sps/sequence/SPS_LS2_2020-05-26.seq';
+ call, file = 'sps/strength/lhc_q26.str';
+ 
  call, file = '../sps/cmd/sps_assignMultipoles_upto7.cmd';
  call, file = '../sps/cmd/sps_matching.cmd';
- option, echo;
 
+ option, echo;
 
 /***************************************************
  * use
@@ -107,19 +102,21 @@
 
 
  ! match tunes
- match, sequence=sps;
- vary, name=kqd, step=1e-8;
- vary, name=kqf1, step=1e-8;
- global, q1=26.13, q2=26.18;
- jacobian,calls=1000,tolerance=1e-12;
- endmatch;
+ call,file="sps/toolkit/macro.madx";
+ exec, sps_match_tunes(26.13, 26.18);
+ !match, sequence=sps;
+ !vary, name=kqd, step=1e-8;
+ !vary, name=kqf1, step=1e-8;
+ !global, q1=26.13, q2=26.18;
+ !jacobian,calls=1000,tolerance=1e-12;
+ !endmatch;
 
  exec, SPS_setchroma_Q26(QPH, QPV);
  ! match chromaticity
  match, sequence=sps;
  vary, name=QPH;
  vary, name=QPV;
- global, dq1=2.0, dq2=2.0;
+ global, dq1=0.0, dq2=0.0;
  lmdif, calls=1000, tolerance=1e-20;
  endmatch;
  twiss;

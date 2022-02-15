@@ -1,0 +1,9 @@
+A) The file job003_match_octupoles_to_detuningCoefficients.py is the same that can be found in the directory ../optics_checks/
+
+B) Sensitivity studies already perforemd:
+1) Sensitvity of the octupole matching to different energies
+No sensitivity to the beam energy. Same results for 26GeV, 200 GeV and 270 GeV.
+
+2) Sensitivity of the octupole matching to the bunch length
+No sensitivity to the bunch length
+

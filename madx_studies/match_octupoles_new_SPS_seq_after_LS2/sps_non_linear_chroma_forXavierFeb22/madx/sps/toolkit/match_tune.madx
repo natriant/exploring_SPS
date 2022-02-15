@@ -1,0 +1,47 @@
+temp_qh_setvalue=qx0;
+temp_qv_setvalue=qy0;
+
+value,qx0,qy0;
+kqf0=kqf;
+kqd0=kqd;
+
+kqf :=  kqf0 + (qh_setvalue - qx0) * dkqf_h + (qv_setvalue - qy0) * dkqf_v;
+kqd :=  kqd0 + (qh_setvalue - qx0) * dkqd_h + (qv_setvalue - qy0) * dkqd_v;
+
+dkqd_h=0; dkqd_v=0;
+dkqf_h=0; dkqf_v=0;
+
+
+match;
+global, q1=qx0;
+global, q2=qy0;
+vary, name=kqf0;
+vary, name=kqd0;
+jacobian, calls=10, tolerance=1e-25;
+endmatch;
+
+qh_setvalue=qx0+0.05;
+qv_setvalue=qy0+0.00;
+
+match;
+global, q1=qh_setvalue;
+global, q2=qv_setvalue;
+vary, name=dkqf_h;
+vary, name=dkqd_h;
+jacobian, calls=10, tolerance=1e-25;
+endmatch;
+
+
+qh_setvalue=qx0+0.00;
+qv_setvalue=qy0+0.05;
+
+match;
+global, q1=qh_setvalue;
+global, q2=qv_setvalue;
+vary, name=dkqf_v;
+vary, name=dkqd_v;
+jacobian, calls=10, tolerance=1e-25;
+endmatch;
+
+qh_setvalue=temp_qh_setvalue;
+qv_setvalue=temp_qv_setvalue;
