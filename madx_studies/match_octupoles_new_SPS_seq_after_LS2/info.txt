@@ -7,3 +7,6 @@ No sensitivity to the beam energy. Same results for 26GeV, 200 GeV and 270 GeV.
 2) Sensitivity of the octupole matching to the bunch length
 No sensitivity to the bunch length
 
+C) The up to data SPS model can be found at: https://gitlab.cern.ch/acc-models/acc-models-sps/-/tree/2021/
+
+Comment: After the last update, Riccardo changed the names of the quadrupole. Therefore, in order to perform the tune matching correctly one needs to use the macros in the ./toolikit directory.
