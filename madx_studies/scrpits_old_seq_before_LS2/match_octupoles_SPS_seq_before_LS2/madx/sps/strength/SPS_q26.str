@@ -1,0 +1,33 @@
+option, -echo;
+! Q26 Optics for LHC beams, from https://gitlab.cern.ch/acc-models/acc-models-sps/-/blob/2021/strengths/lhc_q26.str
+
+
+kMBA  :=  0.008445141542 ;
+kMBB  :=  0.008445141542 ;
+
+
+kLSDA  =       -0.1496282606 ;
+kLSDB  =  -0.1456131825;
+kLSFA  =    0.06325645858999999;
+kLSFB  =   0.1214166893;
+kLSFC  := kLSFA;
+
+
+kQD   :=   -0.01443942830604748;
+kQDA  := kQD*9.0/11.0;
+kQF1  :=   0.01443572827710523;
+kQF1A :=  kQF1*9./11.;
+kQF2  :=  kQF1;
+kQF2A :=  kQF2*9./11.;
+
+
+kQFC2  =  kQF1;
+kQFC3  =  kQF1;
+kQDC2  =  kQD;
+kQDC3  =  kQD;
+
+
+option, echo;
+
+return;
+

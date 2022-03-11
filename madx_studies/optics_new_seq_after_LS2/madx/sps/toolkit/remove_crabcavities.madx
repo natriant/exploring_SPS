@@ -1,0 +1,6 @@
+seqedit, sequence=sps;
+remove, element=BPMCA.61737;
+remove, element=ACFCA.61739;
+remove, element=ACFCA.61740;
+remove, element=BPMCA.61751;
+endedit;
