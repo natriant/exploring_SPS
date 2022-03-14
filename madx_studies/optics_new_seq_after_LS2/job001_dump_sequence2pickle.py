@@ -20,7 +20,8 @@ for parameter in madx_settings:
 mad.use(seq_name)
 
 twtable = mad.twiss()
-#print(twtable.keys())
+print(twtable.keys())
+#quit()
 
 with open('twiss_s.pkl', 'wb') as fid:
     pickle.dump(twtable.s, fid)
@@ -36,3 +37,6 @@ with open('twiss_Dx.pkl', 'wb') as fid:
 
 with open('twiss_l.pkl', 'wb') as fid:
     pickle.dump(twtable.l, fid)
+
+with open('twiss_name.pkl', 'wb') as fid:
+    pickle.dump(twtable.name, fid)
