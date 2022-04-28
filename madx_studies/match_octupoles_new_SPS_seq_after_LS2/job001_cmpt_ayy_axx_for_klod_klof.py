@@ -1,7 +1,7 @@
 from cpymad.madx import Madx
 
 # MAD-X parameters dictionary
-madx_settings = {'QH':26.13, 'QV':26.18, 'QPH':0.0, 'QPV':0.0}
+madx_settings = {'QH':26.13, 'QV':26.18, 'QPH':0.5, 'QPV':0.5}
 seq_name = 'sps'
 harmonic_number = 4620
 
@@ -41,7 +41,7 @@ print('here')
 
 
 
-klod, klof = 0.0, 0.0
+klod, klof = -15.0, 0.0
 mad.input(f'klod = {klod};')
 mad.input(f'klof = {klof};')
 mad.call('./ptc/ptc.macro')
