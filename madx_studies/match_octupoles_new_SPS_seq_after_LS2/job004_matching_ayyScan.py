@@ -46,10 +46,10 @@ for my_ayy in ayy_list:
 
     
     # Include b3b5b7 in MBA and MBB
-    #mad.call('./sps/cmd/sps_setMultipoles_upto7.cmd')
-    #mad.input('exec, set_Multipoles_270GeV;')
-    #mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
-    #mad.input('exec, AssignMultipoles;')
+    mad.call('./sps/cmd/sps_setMultipoles_upto7.cmd')
+    mad.input('exec, set_Multipoles_270GeV;')
+    mad.call('./sps/cmd/sps_assignMultipoles_upto7.cmd')
+    mad.input('exec, AssignMultipoles;')
 
     # Tune matching. After the latest update the names of the quadrupoles changed. Therfore, to performe the tune matching correctly the following macro from the toolkit repository is needed.
     # https://gitlab.cern.ch/acc-models/acc-models-sps/-/tree/2021/
@@ -88,6 +88,6 @@ for my_ayy in ayy_list:
     else:
         df = df.append(my_dict, ignore_index=True)
 print(df)
-df.to_pickle('matching_results_QpxQpy1_nob3b5b7_200GeV_positive_ayy_lod.pkl')
+df.to_pickle('matching_results_QpxQpy1_b3b5b7_270GeV_negative_ayy_lod.pkl')
 
 

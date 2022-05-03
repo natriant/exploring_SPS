@@ -23,12 +23,12 @@ def cmpt_current_klod(O3): # O3 the octupole coefficient [A]
     return 0.009*O3 # Approach 2
 
 #### Study parameters #####
-pc = 200 # GeV
+pc = 270 # GeV
 Brho = cmpt_Brho(pc)
 print(Brho)
 
 path2octupoles_matching_data  = './'
-study_list = ['matching_results_QpxQpy1_nob3b5b7_200GeV_negative_ayy_lod.pkl', 'matching_results_QpxQpy1_nob3b5b7_200GeV_positive_ayy_lod.pkl']
+study_list = ['matching_results_QpxQpy1_b3b5b7_270GeV_negative_ayy_lod.pkl', 'matching_results_QpxQpy1_b3b5b7_270GeV_positive_ayy_lod.pkl']
 
 axy_list, ayy_list = [], []
 klof_list, klod_list= [], []
@@ -68,6 +68,6 @@ df1 = pd.DataFrame(test_list, index=index_list).T
 # save data frame to pickle
 save2pickle=True
 if save2pickle:
-	df1.to_pickle("summary_QpxQpy1_nob3b5b7_200GeV_ayyScan_axyNoConstraint_LOD_v2.pkl")
+	df1.to_pickle("summary_QpxQpy1_b3b5b7_270GeV_ayyScan_axyNoConstraint_LOD.pkl")
 # test print
 print(df1[df1.keys()[2]])
