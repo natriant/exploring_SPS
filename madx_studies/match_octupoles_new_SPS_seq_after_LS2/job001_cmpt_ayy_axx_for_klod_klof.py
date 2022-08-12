@@ -41,7 +41,7 @@ print('here')
 
 
 
-klod, klof = -15.0, 0.0
+klod, klof = 1.0, 0.0
 mad.input(f'klod = {klod};')
 mad.input(f'klof = {klof};')
 mad.call('./ptc/ptc.macro')
